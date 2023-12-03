@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:digitaledge/core/strings_manager.dart';
 import 'package:digitaledge/network/api_constants.dart';
-import 'package:digitaledge/network/extension.dart';
+import 'package:digitaledge/network/extensions.dart';
 import 'package:digitaledge/pages/login/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

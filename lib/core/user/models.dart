@@ -6,7 +6,7 @@ class UserProfile {
 
   String countryCode;
   String token;
-  String tokenExpiry;
+
   UserProfile({
   
     required this.name,
@@ -14,7 +14,7 @@ class UserProfile {
     required this.phone,
     required this.countryCode,
     required this.token,
-    required this.tokenExpiry,
+
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
@@ -25,7 +25,7 @@ class UserProfile {
      
         countryCode: json['country_code'],
         token: json['token'],
-        tokenExpiry: json['token_expiry']);
+        );
   }
   Map<String,dynamic> toJson() {
     return {
@@ -34,7 +34,7 @@ class UserProfile {
       'phone':phone,
       'country_code':countryCode,
       'token':token,
-      'token_expiry':tokenExpiry,
+     
    
     };
   }

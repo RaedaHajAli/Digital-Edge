@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:digitaledge/core/strings_manager.dart';
-import 'package:digitaledge/network/extension.dart';
+import 'package:digitaledge/network/extensions.dart';
 import 'package:digitaledge/pages/register/models.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';

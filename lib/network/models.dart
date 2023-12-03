@@ -1,4 +1,3 @@
-import 'package:digitaledge/core/user/models.dart';
 
 class UserItem {
   String id;

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:digitaledge/core/user/models.dart';
 import 'package:digitaledge/network/api_constants.dart';
+import 'package:digitaledge/network/extensions.dart';
 import 'package:digitaledge/pages/update_information/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,7 +68,7 @@ class UpdateInformationController extends GetxController {
           if (response.statusCode == 200) {
             updateUserResponse = UpdateUserResponse.fromJson(data);
             if (updateUserResponse != null) {
-              updateUserProfileStore();
+              updateUserResponse!.updateStore();
               loading.value = false;
               Get.offAllNamed(AppRoutes.homeRoute);
             }
@@ -89,12 +90,5 @@ class UpdateInformationController extends GetxController {
       loading.value = false;
       Get.snackbar(AppStrings.networkFailed, AppStrings.networkFailedMessage);
     }
-  }
-
-  static updateUserProfileStore() {
-    UserStore.to.userProfile!.email = updateUserResponse!.email;
-    UserStore.to.userProfile!.name = updateUserResponse!.name;
-    UserStore.to.userProfile!.phone = updateUserResponse!.phone;
-    UserStore.to.userProfile!.countryCode = updateUserResponse!.countryCode;
   }
 }
