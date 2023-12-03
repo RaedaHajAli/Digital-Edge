@@ -1,3 +1,7 @@
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+
+import 'network_info.dart';
+
 class ApiConstants {
   static const String baseUrl = 'http://testapi.alifouad91.com/api';
   static const String registerUrl = '/user/register';
@@ -11,4 +15,5 @@ class ApiConstants {
       'Authorization': token??'',
     };
   }
+   static NetworkInfo networkInfo = NetworkInfo(InternetConnectionChecker());
 }

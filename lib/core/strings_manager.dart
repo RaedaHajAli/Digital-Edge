@@ -17,9 +17,14 @@ class AppStrings {
   static const String logout = 'Logout';
 
   static const String success = 'Success';
-   static const String successMessage = 'Your information is updated successfully';
-    static const String save = 'Save';
-
-
-  
+  static const String failed = 'Failed';
+  static const String successRegister = 'You have registered successfully';
+  static const String successUpdate =
+      'Your information is updated successfully';
+  static const String successLogin = 'You have logged in successfully';
+  static const String save = 'Save';
+  static const String failedMessage = 'Something went wrong';
+  static const String networkFailed = 'Network Failed';
+  static const String networkFailedMessage =
+      'You are\'t connected to the internet, please check your network';
 }

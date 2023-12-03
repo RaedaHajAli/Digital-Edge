@@ -12,6 +12,7 @@ import 'package:digitaledge/pages/update_information/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../core/functions.dart';
 
@@ -23,23 +24,30 @@ class UpdateInformationView extends GetView<UpdateInformationController> {
     
     return Scaffold(
       backgroundColor: ColorManager.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildAppBar(
-                title: AppStrings.updateInformation,
-                isIconNeeded: true,
-                onTap: () => Get.offAllNamed(AppRoutes.homeRoute)),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: AppSize.s30,
-                left: AppSize.s50,
-                right: AppSize.s50,
+      body: Obx(
+         () {
+          return ModalProgressHUD(
+            inAsyncCall:controller.loading.value ,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  buildAppBar(
+                      title: AppStrings.updateInformation,
+                      isIconNeeded: true,
+                      onTap: () => Get.offAllNamed(AppRoutes.homeRoute)),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: AppSize.s30,
+                      left: AppSize.s50,
+                      right: AppSize.s50,
+                    ),
+                    child: _buildUpdateForm(),
+                  )
+                ],
               ),
-              child: _buildUpdateForm(),
-            )
-          ],
-        ),
+            ),
+          );
+        }
       ),
     );
   }

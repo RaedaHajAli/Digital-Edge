@@ -147,12 +147,12 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       _buildDataContainer(
                           icon: Icons.person_outline_rounded,
-                          dataTitle:controller.userProfile!.name??''),
+                          dataTitle:controller.userProfile?.name??''),
                       _buildDataContainer(
                           icon: Icons.phone_android, dataTitle:'${controller.userProfile!.countryCode} ${controller.userProfile!.phone}'),
                       _buildDataContainer(
                           icon: Icons.email_outlined,
-                          dataTitle: controller.userProfile!.email??''),
+                          dataTitle: controller.userProfile?.email??''),
                     ],
                   );
                 }

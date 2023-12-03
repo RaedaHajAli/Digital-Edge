@@ -5,6 +5,7 @@ import 'package:digitaledge/pages/login/controller.dart';
 import 'package:digitaledge/pages/login/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../core/functions.dart';
 import '../../core/widgets.dart';
@@ -18,37 +19,44 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.white,
-      body: Container(
-        width: AppSize.s360.w,
-        height: AppSize.s780.h,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: AppSize.s60.h,
+      body:Obx(
+       () {
+          return ModalProgressHUD(
+            inAsyncCall: controller.loading.value,
+            child: Container(
+              width: AppSize.s360.w,
+              height: AppSize.s780.h,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: AppSize.s60.h,
+                      ),
+                      buildLogoImage(),
+                      buildTitleText(AppStrings.login),
+                      SizedBox(
+                        height: AppSize.s100.h,
+                      ),
+                      _buildLoginForm(),
+                      SizedBox(
+                        height: AppSize.s150.h,
+                      ),
+                      buildFooterText(AppStrings.loginText, AppStrings.register, () {
+                        Get.offAllNamed(AppRoutes.registerRoute);
+                      }),
+                      SizedBox(
+                        height: AppSize.s15.h,
+                      ),
+                    ],
+                  ),
                 ),
-                buildLogoImage(),
-                buildTitleText(AppStrings.login),
-                SizedBox(
-                  height: AppSize.s100.h,
-                ),
-                _buildLoginForm(),
-                SizedBox(
-                  height: AppSize.s150.h,
-                ),
-                buildFooterText(AppStrings.loginText, AppStrings.register, () {
-                  Get.offAllNamed(AppRoutes.registerRoute);
-                }),
-                SizedBox(
-                  height: AppSize.s15.h,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        }
       ),
     );
   }

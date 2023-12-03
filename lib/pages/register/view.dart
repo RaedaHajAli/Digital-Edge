@@ -12,45 +12,53 @@ import '../../core/widgets.dart';
 import '../../core/strings_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  RegisterView({super.key});
+ const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.white,
-      body: Container(
-        width: AppSize.s360.w,
-        height: AppSize.s780.h,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: AppSize.s60.h,
+      body: Obx(
+       () {
+          return ModalProgressHUD(
+            inAsyncCall:controller.loading.value ,
+            child: Container(
+              width: AppSize.s360.w,
+              height: AppSize.s780.h,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: AppSize.s60.h,
+                      ),
+                      buildLogoImage(),
+                      buildTitleText(AppStrings.register),
+                      SizedBox(
+                        height: AppSize.s30.h,
+                      ),
+                      _buildRegisterForm(),
+                      SizedBox(
+                        height: AppSize.s30.h,
+                      ),
+                      buildFooterText(AppStrings.registerText, AppStrings.login, () {
+                        Get.offAllNamed(AppRoutes.loginRoute);
+                      }),
+                      SizedBox(
+                        height: AppSize.s15.h,
+                      ),
+                    ],
+                  ),
                 ),
-                buildLogoImage(),
-                buildTitleText(AppStrings.register),
-                SizedBox(
-                  height: AppSize.s30.h,
-                ),
-                _buildRegisterForm(),
-                SizedBox(
-                  height: AppSize.s30.h,
-                ),
-                buildFooterText(AppStrings.registerText, AppStrings.login, () {
-                  Get.offAllNamed(AppRoutes.loginRoute);
-                }),
-                SizedBox(
-                  height: AppSize.s15.h,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        }
       ),
     );
   }
@@ -176,7 +184,7 @@ class RegisterView extends GetView<RegisterController> {
                     backgroundColor: ColorManager.primary,
                     onPressed: () {
                       if (controller.formKey.currentState!.validate()) {
-                        controller.register(RegisterRequest(
+                        controller.registerUser(RegisterRequest(
                             name: controller.nameController.text,
                             email: controller.emailController.text,
                             phone: controller.phoneController.text,
