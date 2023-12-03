@@ -7,6 +7,7 @@ import 'package:digitaledge/pages/login/view.dart';
 import 'package:digitaledge/pages/register/view.dart';
 import 'package:digitaledge/pages/update_information/bindings.dart';
 import 'package:digitaledge/pages/update_information/view.dart';
+import 'package:digitaledge/pages/welcome/view.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -20,23 +21,28 @@ class AppRoutes {
 
 class AppPages {
   static const initial = AppRoutes.welcomeRoute;
+  static const home = AppRoutes.homeRoute;
 
   static final List<GetPage> routes = [
+    GetPage(
+        name: AppRoutes.welcomeRoute,
+        page: () => WelcomeView(),
+        binding: LoginBiniding()),
     GetPage(
         name: AppRoutes.loginRoute,
         page: () => LoginView(),
         binding: LoginBiniding()),
     GetPage(
         name: AppRoutes.registerRoute,
-        page: () => RegisterView(),
+        page: () => const RegisterView(),
         binding: RegisterBiniding()),
     GetPage(
         name: AppRoutes.homeRoute,
-        page: () => HomeView(),
+        page: () => const HomeView(),
         binding: HomeBiniding()),
-         GetPage(
+    GetPage(
         name: AppRoutes.updateInformationRoute,
-        page: () => UpdateInformationView(),
+        page: () => const UpdateInformationView(),
         binding: UpdateInformationBiniding()),
   ];
 }

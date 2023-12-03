@@ -1,5 +1,5 @@
-class UserItem {
-  String id;
+class UserProfile {
+  
   String name;
   String email;
   String phone;
@@ -7,8 +7,8 @@ class UserItem {
   String countryCode;
   String token;
   String tokenExpiry;
-  UserItem({
-    required this.id,
+  UserProfile({
+  
     required this.name,
     required this.email,
     required this.phone,
@@ -17,14 +17,25 @@ class UserItem {
     required this.tokenExpiry,
   });
 
-  factory UserItem.fromJson(Map<String, dynamic> json) {
-    return UserItem(
-        name: json['data']['name'],
-        email: json['data']['email'],
-        phone: json['data']['phone'],
-        id: json['data']['id'],
-        countryCode: json['data']['country_code'],
-        token: json['data']['token'],
-        tokenExpiry: json['data']['token_expiry']);
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
+    return UserProfile(
+        name: json['name'],
+        email: json['email'],
+        phone: json['phone'],
+     
+        countryCode: json['country_code'],
+        token: json['token'],
+        tokenExpiry: json['token_expiry']);
+  }
+  Map<String,dynamic> toJson() {
+    return {
+      'email':email,
+      'name':name,
+      'phone':phone,
+      'country_code':countryCode,
+      'token':token,
+      'token_expiry':tokenExpiry,
+   
+    };
   }
 }

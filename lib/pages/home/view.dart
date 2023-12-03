@@ -86,7 +86,6 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
         backgroundColor: ColorManager.white,
         body: SingleChildScrollView(
@@ -100,7 +99,7 @@ class HomeView extends GetView<HomeController> {
                     left: AppPadding.p20,
                     right: AppPadding.p20,
                     top: AppPadding.p25),
-                child:_buildUserData(),
+                child: _buildUserData(),
               ),
               _buildButton(
                 onTap: () {
@@ -129,9 +128,7 @@ class HomeView extends GetView<HomeController> {
               ),
               _buildButton(
                 onTap: () {
-                  print(
-                    AppStrings.logout,
-                  );
+                  UserStore.to.onLogout();
                 },
                 buttonTitle: AppStrings.logout,
               ),
@@ -141,21 +138,21 @@ class HomeView extends GetView<HomeController> {
   }
 
   GetBuilder<UserStore> _buildUserData() {
-    return GetBuilder<UserStore>(
-                builder: (controller) {
-                  return Column(
-                    children: [
-                      _buildDataContainer(
-                          icon: Icons.person_outline_rounded,
-                          dataTitle:controller.userProfile?.name??''),
-                      _buildDataContainer(
-                          icon: Icons.phone_android, dataTitle:'${controller.userProfile!.countryCode} ${controller.userProfile!.phone}'),
-                      _buildDataContainer(
-                          icon: Icons.email_outlined,
-                          dataTitle: controller.userProfile?.email??''),
-                    ],
-                  );
-                }
-              );
+    return GetBuilder<UserStore>(builder: (controller) {
+      return Column(
+        children: [
+          _buildDataContainer(
+              icon: Icons.person_outline_rounded,
+              dataTitle: controller.userProfile?.name ?? ''),
+          _buildDataContainer(
+              icon: Icons.phone_android,
+              dataTitle:
+                  '${controller.userProfile!.countryCode} ${controller.userProfile!.phone}'),
+          _buildDataContainer(
+              icon: Icons.email_outlined,
+              dataTitle: controller.userProfile?.email ?? ''),
+        ],
+      );
+    });
   }
 }

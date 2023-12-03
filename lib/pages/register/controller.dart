@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:digitaledge/core/strings_manager.dart';
+import 'package:digitaledge/network/extension.dart';
 import 'package:digitaledge/pages/register/models.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 import '../../core/routes_manager.dart';
 import '../../core/user/controller.dart';
-import '../../core/user/models.dart';
+import '../../network/models.dart';
 import '../../network/api_constants.dart';
 
 class RegisterController extends GetxController {
@@ -28,6 +29,7 @@ class RegisterController extends GetxController {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String contryCode = '+971';
   var loading = false.obs;
+  UserItem? user;
 
   enableAutoValidate() {
     autovalidateMode = AutovalidateMode.always;
@@ -70,11 +72,14 @@ class RegisterController extends GetxController {
         // check if success
         if (baseResponse?.success ?? false) {
           if (response.statusCode == 201) {
-            UserStore.to.userProfile = UserItem.fromJson(data);
+            user = UserItem.fromJson(data);
+
             loading.value = false;
             Get.snackbar(AppStrings.success, AppStrings.successRegister);
             Get.offAllNamed(AppRoutes.homeRoute);
-            UserStore.to.token = 'Bearer ${UserStore.to.userProfile!.token}';
+            UserStore.to.saveToken('Bearer ${user!.token}');
+
+            UserStore.to.saveProfile(user!.toStore());
           }
         } else {
           // failure has been occured
@@ -83,9 +88,8 @@ class RegisterController extends GetxController {
               '${baseResponse?.message ?? AppStrings.failedMessage}');
         }
       } on HttpException catch (e) {
-          loading.value = false;
+        loading.value = false;
         Get.snackbar(
-
             AppStrings.failed, '${AppStrings.failedMessage} ${e.message}');
       }
     } else {

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:digitaledge/core/strings_manager.dart';
 import 'package:digitaledge/network/api_constants.dart';
+import 'package:digitaledge/network/extension.dart';
 import 'package:digitaledge/pages/login/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 import '../../core/routes_manager.dart';
 import '../../core/user/controller.dart';
-import '../../core/user/models.dart';
+import '../../network/models.dart';
 import '../register/models.dart';
 
 class LoginController extends GetxController {
@@ -22,6 +23,7 @@ class LoginController extends GetxController {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   var loading = false.obs;
   BaseResponse? baseResponse;
+  UserItem? user;
   enableAutoValidate() {
     autovalidateMode = AutovalidateMode.always;
     update();
@@ -45,7 +47,7 @@ class LoginController extends GetxController {
         http.Response response = await http.post(url,
             headers: ApiConstants.getHeader(), body: loginRequest.toJson());
 
-        // print(response.body);
+      //   print(response.body);
 
         // decode response
         Map<String, dynamic> data = jsonDecode(response.body);
@@ -55,15 +57,14 @@ class LoginController extends GetxController {
         // check if success
         if (baseResponse?.success ?? false) {
           if (response.statusCode == 200) {
-            UserStore.to.userProfile = UserItem.fromJson(data);
+            user = UserItem.fromJson(data);
             loading.value = false;
             Get.snackbar(AppStrings.success, AppStrings.successLogin);
 
-            // token = utf8.decode(user!.token.codeUnits);
-            UserStore.to.token = 'Bearer ${UserStore.to.userProfile!.token}';
-           
-
             Get.offAllNamed(AppRoutes.homeRoute);
+            // token = utf8.decode(user!.token.codeUnits);
+            UserStore.to.saveToken('Bearer ${user!.token}');
+            UserStore.to.saveProfile(user!.toStore());
           }
         } else {
           // failure has been occured
