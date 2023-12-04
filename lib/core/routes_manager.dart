@@ -21,7 +21,7 @@ class AppRoutes {
 
 class AppPages {
   static const initial = AppRoutes.welcomeRoute;
-  static const home = AppRoutes.homeRoute;
+
 
   static final List<GetPage> routes = [
     GetPage(
